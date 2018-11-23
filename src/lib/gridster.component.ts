@@ -111,7 +111,7 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
   resize(): void {
     let height;
     let width;
-    if (this.$options.gridType === 'fit') {
+    if (this.$options.gridType === 'fit' && !this.mobile) {
       width = this.el.offsetWidth;
       height = this.el.offsetHeight;
     } else {
@@ -190,7 +190,7 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
   setGridSize(): void {
     let width = this.el.clientWidth;
     let height = this.el.clientHeight;
-    if (this.$options.gridType === 'fit') {
+    if (this.$options.gridType === 'fit' && !this.mobile) {
       width = this.el.offsetWidth;
       height = this.el.offsetHeight;
     } else {
