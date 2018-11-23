@@ -15,15 +15,10 @@ export class GridsterRenderer {
   }
 
   updateItem(el: any, item: GridsterItemS, renderer: Renderer2) {
-    if (this.gridster.mobile) {
-      renderer.setStyle(el, 'transform', null);
-      renderer.setStyle(el, 'width', null);
-      renderer.setStyle(el, 'height', null);
-      renderer.setStyle(el, 'margin-bottom', this.gridster.$options.margin + 'px');
-    } else {
-      const x = Math.round(this.gridster.curColWidth * item.x);
+    const x = Math.round(this.gridster.curColWidth * item.x);
       const y = Math.round(this.gridster.curRowHeight * item.y);
-      const width = this.gridster.curColWidth * item.cols - this.gridster.$options.margin;
+      const cols = this.gridster.mobile ? 1 : item.cols;
+      const width = this.gridster.curColWidth * cols - this.gridster.$options.margin;
       const height = (this.gridster.curRowHeight * item.rows - this.gridster.$options.margin);
       const transform = 'translate3d(' + x + 'px, ' + y + 'px, 0)';
       renderer.setStyle(el, 'transform', transform);
@@ -39,7 +34,7 @@ export class GridsterRenderer {
             marginBottom = this.gridster.$options.margin + 'px';
           }
         }
-        if (this.gridster.columns === item.cols + item.x) {
+        if (this.gridster.columns === cols + item.x) {
           if (this.gridster.$options.outerMarginBottom !== null) {
             marginRight = this.gridster.$options.outerMarginRight + 'px';
           } else {
@@ -50,7 +45,6 @@ export class GridsterRenderer {
 
       renderer.setStyle(el, 'margin-bottom', marginBottom);
       renderer.setStyle(el, 'margin-right', marginRight);
-    }
   }
 
   updateGridster() {
@@ -100,11 +94,13 @@ export class GridsterRenderer {
       removeClass3 = GridType.Fixed;
     }
 
-    if (this.gridster.mobile) {
+    /*if (false) {
       this.gridster.renderer.removeClass(this.gridster.el, addClass);
     } else {
       this.gridster.renderer.addClass(this.gridster.el, addClass);
-    }
+    }*/
+      this.gridster.renderer.addClass(this.gridster.el, addClass);
+      
     this.gridster.renderer.removeClass(this.gridster.el, removeClass1);
     this.gridster.renderer.removeClass(this.gridster.el, removeClass2);
     this.gridster.renderer.removeClass(this.gridster.el, removeClass3);

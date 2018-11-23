@@ -111,7 +111,7 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
   resize(): void {
     let height;
     let width;
-    if (this.$options.gridType === 'fit' && !this.mobile) {
+    if (this.$options.gridType === 'fit') {
       width = this.el.offsetWidth;
       height = this.el.offsetHeight;
     } else {
@@ -190,7 +190,7 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
   setGridSize(): void {
     let width = this.el.clientWidth;
     let height = this.el.clientHeight;
-    if (this.$options.gridType === 'fit' && !this.mobile) {
+    if (this.$options.gridType === 'fit') {
       width = this.el.offsetWidth;
       height = this.el.offsetHeight;
     } else {
@@ -206,6 +206,7 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
     if (!this.mobile && this.$options.mobileBreakpoint > this.curWidth) {
       this.mobile = !this.mobile;
       this.renderer.addClass(this.el, 'mobile');
+      //this.renderer.removeClass(this.el, 'mobile');
     } else if (this.mobile && this.$options.mobileBreakpoint < this.curWidth) {
       this.mobile = !this.mobile;
       this.renderer.removeClass(this.el, 'mobile');
@@ -297,7 +298,8 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
     } else if (this.$options.displayGrid === 'onDrag&Resize' && this.dragInProgress) {
       this.renderer.addClass(this.el, 'display-grid');
     } else if (this.$options.displayGrid === 'none' || !this.dragInProgress || this.mobile) {
-      this.renderer.removeClass(this.el, 'display-grid');
+      this.renderer.addClass(this.el, 'display-grid');
+      //this.renderer.removeClass(this.el, 'display-grid');
     }
     this.setGridDimensions();
     this.gridColumns.length = Math.max(this.columns, Math.floor(this.curWidth / this.curColWidth)) || 0;

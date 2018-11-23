@@ -135,13 +135,11 @@ export class GridsterItemComponent implements OnInit, OnDestroy, GridsterItemCom
   }
 
   canBeDragged(): boolean {
-    return !this.gridster.mobile &&
-      (this.$item.dragEnabled === undefined ? this.gridster.$options.draggable.enabled : this.$item.dragEnabled);
+    return (this.$item.dragEnabled === undefined ? this.gridster.$options.draggable.enabled : this.$item.dragEnabled);
   }
 
   canBeResized(): boolean {
-    return !this.gridster.mobile &&
-      (this.$item.resizeEnabled === undefined ? this.gridster.$options.resizable.enabled : this.$item.resizeEnabled);
+    return (this.$item.resizeEnabled === undefined ? this.gridster.$options.resizable.enabled : this.$item.resizeEnabled);
   }
 
 }
