@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 var gridsterConfig_interface_1 = require("./gridsterConfig.interface");
 exports.GridsterConfigService = {
     gridType: gridsterConfig_interface_1.GridType.Fit,

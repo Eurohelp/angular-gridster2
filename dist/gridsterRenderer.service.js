@@ -1,7 +1,12 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+exports.__esModule = true;
 var core_1 = require("@angular/core");
-var gridster_interface_1 = require("./gridster.interface");
 var gridsterConfig_interface_1 = require("./gridsterConfig.interface");
 var GridsterRenderer = /** @class */ (function () {
     function GridsterRenderer(gridster) {
@@ -11,44 +16,37 @@ var GridsterRenderer = /** @class */ (function () {
         delete this.gridster;
     };
     GridsterRenderer.prototype.updateItem = function (el, item, renderer) {
-        if (this.gridster.mobile) {
-            renderer.setStyle(el, 'transform', null);
-            renderer.setStyle(el, 'width', null);
-            renderer.setStyle(el, 'height', null);
-            renderer.setStyle(el, 'margin-bottom', this.gridster.$options.margin + 'px');
-        }
-        else {
-            var x = Math.round(this.gridster.curColWidth * item.x);
-            var y = Math.round(this.gridster.curRowHeight * item.y);
-            var width = this.gridster.curColWidth * item.cols - this.gridster.$options.margin;
-            var height = (this.gridster.curRowHeight * item.rows - this.gridster.$options.margin);
-            var transform = 'translate3d(' + x + 'px, ' + y + 'px, 0)';
-            renderer.setStyle(el, 'transform', transform);
-            renderer.setStyle(el, 'width', width + 'px');
-            renderer.setStyle(el, 'height', height + 'px');
-            var marginBottom = null;
-            var marginRight = null;
-            if (this.gridster.$options.outerMargin) {
-                if (this.gridster.rows === item.rows + item.y) {
-                    if (this.gridster.$options.outerMarginBottom !== null) {
-                        marginBottom = this.gridster.$options.outerMarginBottom + 'px';
-                    }
-                    else {
-                        marginBottom = this.gridster.$options.margin + 'px';
-                    }
+        var x = Math.round(this.gridster.curColWidth * item.x);
+        var y = Math.round(this.gridster.curRowHeight * item.y);
+        var cols = this.gridster.mobile ? 1 : item.cols;
+        var width = this.gridster.curColWidth * cols - this.gridster.$options.margin;
+        var height = (this.gridster.curRowHeight * item.rows - this.gridster.$options.margin);
+        var transform = 'translate3d(' + x + 'px, ' + y + 'px, 0)';
+        renderer.setStyle(el, 'transform', transform);
+        renderer.setStyle(el, 'width', width + 'px');
+        renderer.setStyle(el, 'height', height + 'px');
+        var marginBottom = null;
+        var marginRight = null;
+        if (this.gridster.$options.outerMargin) {
+            if (this.gridster.rows === item.rows + item.y) {
+                if (this.gridster.$options.outerMarginBottom !== null) {
+                    marginBottom = this.gridster.$options.outerMarginBottom + 'px';
                 }
-                if (this.gridster.columns === item.cols + item.x) {
-                    if (this.gridster.$options.outerMarginBottom !== null) {
-                        marginRight = this.gridster.$options.outerMarginRight + 'px';
-                    }
-                    else {
-                        marginRight = this.gridster.$options.outerMarginRight + 'px';
-                    }
+                else {
+                    marginBottom = this.gridster.$options.margin + 'px';
                 }
             }
-            renderer.setStyle(el, 'margin-bottom', marginBottom);
-            renderer.setStyle(el, 'margin-right', marginRight);
+            if (this.gridster.columns === cols + item.x) {
+                if (this.gridster.$options.outerMarginBottom !== null) {
+                    marginRight = this.gridster.$options.outerMarginRight + 'px';
+                }
+                else {
+                    marginRight = this.gridster.$options.outerMarginRight + 'px';
+                }
+            }
         }
+        renderer.setStyle(el, 'margin-bottom', marginBottom);
+        renderer.setStyle(el, 'margin-right', marginRight);
     };
     GridsterRenderer.prototype.updateGridster = function () {
         var addClass = '';
@@ -101,12 +99,12 @@ var GridsterRenderer = /** @class */ (function () {
             removeClass2 = gridsterConfig_interface_1.GridType.ScrollVertical;
             removeClass3 = gridsterConfig_interface_1.GridType.Fixed;
         }
-        if (this.gridster.mobile) {
-            this.gridster.renderer.removeClass(this.gridster.el, addClass);
-        }
-        else {
-            this.gridster.renderer.addClass(this.gridster.el, addClass);
-        }
+        /*if (false) {
+          this.gridster.renderer.removeClass(this.gridster.el, addClass);
+        } else {
+          this.gridster.renderer.addClass(this.gridster.el, addClass);
+        }*/
+        this.gridster.renderer.addClass(this.gridster.el, addClass);
         this.gridster.renderer.removeClass(this.gridster.el, removeClass1);
         this.gridster.renderer.removeClass(this.gridster.el, removeClass2);
         this.gridster.renderer.removeClass(this.gridster.el, removeClass3);
@@ -125,13 +123,9 @@ var GridsterRenderer = /** @class */ (function () {
             height: this.gridster.curRowHeight - this.gridster.$options.margin + 'px'
         };
     };
-    GridsterRenderer.decorators = [
-        { type: core_1.Injectable },
-    ];
-    /** @nocollapse */
-    GridsterRenderer.ctorParameters = function () { return [
-        { type: gridster_interface_1.GridsterComponentInterface, },
-    ]; };
+    GridsterRenderer = __decorate([
+        core_1.Injectable()
+    ], GridsterRenderer);
     return GridsterRenderer;
 }());
 exports.GridsterRenderer = GridsterRenderer;
