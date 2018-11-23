@@ -32,7 +32,6 @@ var GridsterComponent = /** @class */ (function () {
         this.minColWidthAdd = 0;
         this.numColumns = 0;
     }
-    GridsterComponent_1 = GridsterComponent;
     GridsterComponent.checkCollisionTwoItems = function (item, item2) {
         return item.x < item2.x + item2.cols
             && item.x + item.cols > item2.x
@@ -364,7 +363,7 @@ var GridsterComponent = /** @class */ (function () {
         var widgetsIndex = this.grid.length - 1, widget;
         for (; widgetsIndex > -1; widgetsIndex--) {
             widget = this.grid[widgetsIndex];
-            if (widget.$item !== item && GridsterComponent_1.checkCollisionTwoItems(widget.$item, item)) {
+            if (widget.$item !== item && GridsterComponent.checkCollisionTwoItems(widget.$item, item)) {
                 return widget;
             }
         }
@@ -375,7 +374,7 @@ var GridsterComponent = /** @class */ (function () {
         var widgetsIndex = this.grid.length - 1, widget;
         for (; widgetsIndex > -1; widgetsIndex--) {
             widget = this.grid[widgetsIndex];
-            if (widget.$item !== item && GridsterComponent_1.checkCollisionTwoItems(widget.$item, item)) {
+            if (widget.$item !== item && GridsterComponent.checkCollisionTwoItems(widget.$item, item)) {
                 a.push(widget);
             }
         }
@@ -474,18 +473,25 @@ var GridsterComponent = /** @class */ (function () {
     GridsterComponent.prototype.positionYToPixels = function (y) {
         return y * this.curRowHeight;
     };
-    __decorate([
-        core_1.Input()
-    ], GridsterComponent.prototype, "options");
-    GridsterComponent = GridsterComponent_1 = __decorate([
-        core_1.Component({
-            selector: 'gridster',
-            templateUrl: './gridster.html',
-            styleUrls: ['./gridster.css'],
-            encapsulation: core_1.ViewEncapsulation.None
-        })
-    ], GridsterComponent);
+    GridsterComponent.decorators = [
+        { type: core_1.Component, args: [{
+                    selector: 'gridster',
+                    template: "<div class=\"gridster-column\" *ngFor=\"let column of gridColumns; let i = index;\"      [ngStyle]=\"gridRenderer.getGridColumnStyle(i)\"></div> <div class=\"gridster-row\" *ngFor=\"let row of gridRows; let i = index;\"      [ngStyle]=\"gridRenderer.getGridRowStyle(i)\"></div> <ng-content></ng-content> <gridster-preview class=\"gridster-preview\"></gridster-preview>",
+                    styles: ["gridster {   position: relative;   box-sizing: border-box;   background: grey;   width: 100%;   height: 100%;   user-select: none;   display: block; }  gridster.fit {   overflow-x: hidden;   overflow-y: hidden; }  gridster.scrollVertical {   overflow-x: hidden;   overflow-y: auto; }  gridster.scrollHorizontal {   overflow-x: auto;   overflow-y: hidden; }  gridster.fixed {   overflow: auto; }  gridster.mobile {   overflow-x: hidden;   overflow-y: auto; min-width: 310px; }  gridster.mobile gridster-item {   position: relative;   height: 25%; }  gridster .gridster-column, gridster .gridster-row {   position: absolute;   display: none;   transition: .3s;   box-sizing: border-box; }  gridster.display-grid .gridster-column, gridster.display-grid .gridster-row {   display: block; }  gridster .gridster-column {   border-left: 1px solid white;   border-right: 1px solid white; }  gridster .gridster-row {   border-top: 1px solid white;   border-bottom: 1px solid white; }"],
+                    encapsulation: core_1.ViewEncapsulation.None
+                },] },
+    ];
+    /** @nocollapse */
+    GridsterComponent.ctorParameters = function () { return [
+        { type: core_1.ElementRef, },
+        { type: core_1.Renderer2, },
+        { type: core_1.ChangeDetectorRef, },
+        { type: core_1.NgZone, },
+    ]; };
+    GridsterComponent.propDecorators = {
+        "options": [{ type: core_1.Input },],
+    };
+
     return GridsterComponent;
-    var GridsterComponent_1;
 }());
 exports.GridsterComponent = GridsterComponent;
