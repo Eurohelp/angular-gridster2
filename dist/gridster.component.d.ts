@@ -38,7 +38,7 @@ export declare class GridsterComponent implements OnInit, OnChanges, OnDestroy, 
     minColWidthAdd: number;
     numColumns: number;
     constructor(el: ElementRef, renderer: Renderer2, cdRef: ChangeDetectorRef, zone: NgZone);
-    static checkCollisionTwoItems(item: GridsterItemS, item2: GridsterItemS): boolean;
+    static checkCollisionTwoItems(mobile: boolean, item: GridsterItemS, item2: GridsterItemS): boolean;
     ngOnInit(): void;
     ngOnChanges(changes: SimpleChanges): void;
     resize(): void;

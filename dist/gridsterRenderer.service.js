@@ -11,7 +11,7 @@ var GridsterRenderer = /** @class */ (function () {
         delete this.gridster;
     };
     GridsterRenderer.prototype.updateItem = function (el, item, renderer) {
-        var x = Math.round(this.gridster.curColWidth * item.x);
+        var x = this.gridster.mobile ? 0 : Math.round(this.gridster.curColWidth * item.x);
         var y = Math.round(this.gridster.curRowHeight * item.y);
         var cols = this.gridster.mobile ? 1 : item.cols;
         var width = this.gridster.curColWidth * cols - this.gridster.$options.margin;

@@ -45,6 +45,12 @@ export function scroll(gridster: GridsterComponentInterface, left: number, top: 
 
   const elemRightOffset = offsetLeft + offsetWidth - left - width;
   const elemLeftOffset = left - offsetLeft;
+  if(gridster.mobile){
+    cancelW();
+    cancelE();
+    cancelHorizontal();
+    return;
+  }
   if (lastMouse.clientX < e.clientX && elemRightOffset <= scrollSensitivity) {
     cancelW();
     if ((resizeEvent && resizeEventType && !resizeEventType.e) || intervalE) {

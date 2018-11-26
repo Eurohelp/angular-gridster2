@@ -41,6 +41,12 @@ function scroll(gridster, left, top, width, height, e, lastMouse, calculateItemP
     }
     var elemRightOffset = offsetLeft + offsetWidth - left - width;
     var elemLeftOffset = left - offsetLeft;
+    if(gridster.mobile){
+        cancelW();
+        cancelE();
+        cancelHorizontal();
+        return;
+    }
     if (lastMouse.clientX < e.clientX && elemRightOffset <= scrollSensitivity) {
         cancelW();
         if ((resizeEvent && resizeEventType && !resizeEventType.e) || intervalE) {

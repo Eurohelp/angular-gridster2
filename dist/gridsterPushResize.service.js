@@ -93,7 +93,7 @@ var GridsterPushResize = /** @class */ (function () {
         var backUpRows = gridsterItemCollide.$item.rows;
         gridsterItemCollide.$item.y = gridsterItem.$item.y + gridsterItem.$item.rows;
         gridsterItemCollide.$item.rows = backUpRows + backUpY - gridsterItemCollide.$item.y;
-        if (!gridster_component_1.GridsterComponent.checkCollisionTwoItems(gridsterItemCollide.$item, gridsterItem.$item)
+        if (!gridster_component_1.GridsterComponent.checkCollisionTwoItems(this.gridster.mobile, gridsterItemCollide.$item, gridsterItem.$item)
             && !this.gridster.checkGridCollision(gridsterItemCollide.$item)) {
             gridsterItemCollide.setSize();
             this.addToPushed(gridsterItemCollide);
@@ -109,7 +109,7 @@ var GridsterPushResize = /** @class */ (function () {
     GridsterPushResize.prototype.tryNorth = function (gridsterItemCollide, gridsterItem, direction) {
         var backUpRows = gridsterItemCollide.$item.rows;
         gridsterItemCollide.$item.rows = gridsterItem.$item.y - gridsterItemCollide.$item.y;
-        if (!gridster_component_1.GridsterComponent.checkCollisionTwoItems(gridsterItemCollide.$item, gridsterItem.$item)
+        if (!gridster_component_1.GridsterComponent.checkCollisionTwoItems(this.gridster.mobile, gridsterItemCollide.$item, gridsterItem.$item)
             && !this.gridster.checkGridCollision(gridsterItemCollide.$item)) {
             gridsterItemCollide.setSize();
             this.addToPushed(gridsterItemCollide);
@@ -126,7 +126,7 @@ var GridsterPushResize = /** @class */ (function () {
         var backUpCols = gridsterItemCollide.$item.cols;
         gridsterItemCollide.$item.x = gridsterItem.$item.x + gridsterItem.$item.cols;
         gridsterItemCollide.$item.cols = backUpCols + backUpX - gridsterItemCollide.$item.x;
-        if (!gridster_component_1.GridsterComponent.checkCollisionTwoItems(gridsterItemCollide.$item, gridsterItem.$item)
+        if (!gridster_component_1.GridsterComponent.checkCollisionTwoItems(this.gridster.mobile, gridsterItemCollide.$item, gridsterItem.$item)
             && !this.gridster.checkGridCollision(gridsterItemCollide.$item)) {
             gridsterItemCollide.setSize();
             this.addToPushed(gridsterItemCollide);
@@ -142,7 +142,7 @@ var GridsterPushResize = /** @class */ (function () {
     GridsterPushResize.prototype.tryWest = function (gridsterItemCollide, gridsterItem, direction) {
         var backUpCols = gridsterItemCollide.$item.cols;
         gridsterItemCollide.$item.cols = gridsterItem.$item.x - gridsterItemCollide.$item.x;
-        if (!gridster_component_1.GridsterComponent.checkCollisionTwoItems(gridsterItemCollide.$item, gridsterItem.$item)
+        if (!gridster_component_1.GridsterComponent.checkCollisionTwoItems(this.gridster.mobile, gridsterItemCollide.$item, gridsterItem.$item)
             && !this.gridster.checkGridCollision(gridsterItemCollide.$item)) {
             gridsterItemCollide.setSize();
             this.addToPushed(gridsterItemCollide);

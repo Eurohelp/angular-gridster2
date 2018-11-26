@@ -15,7 +15,7 @@ export class GridsterRenderer {
   }
 
   updateItem(el: any, item: GridsterItemS, renderer: Renderer2) {
-    const x = Math.round(this.gridster.curColWidth * item.x);
+    const x = this.gridster.mobile ? 0 : Math.round(this.gridster.curColWidth * item.x);
       const y = Math.round(this.gridster.curRowHeight * item.y);
       const cols = this.gridster.mobile ? 1 : item.cols;
       const width = this.gridster.curColWidth * cols - this.gridster.$options.margin;

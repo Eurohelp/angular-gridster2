@@ -78,11 +78,18 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
     this.numColumns = 0;
   }
 
-  static checkCollisionTwoItems(item: GridsterItemS, item2: GridsterItemS): boolean {
-    return item.x < item2.x + item2.cols
-      && item.x + item.cols > item2.x
-      && item.y < item2.y + item2.rows
-      && item.y + item.rows > item2.y;
+  static checkCollisionTwoItems(mobile: boolean, item: GridsterItemS, item2: GridsterItemS): boolean {
+    if(mobile){
+      return 0 < 0 + item2.cols
+          && 0 + item.cols > 0
+          && item.y < item2.y + item2.rows
+          && item.y + item.rows > item2.y;
+    }else{ 
+        return item.x < item2.x + item2.cols
+            && item.x + item.cols > item2.x
+            && item.y < item2.y + item2.rows
+            && item.y + item.rows > item2.y;
+    }
   }
 
   ngOnInit(): void {
@@ -426,7 +433,7 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
     let widgetsIndex: number = this.grid.length - 1, widget: GridsterItemComponentInterface;
     for (; widgetsIndex > -1; widgetsIndex--) {
       widget = this.grid[widgetsIndex];
-      if (widget.$item !== item && GridsterComponent.checkCollisionTwoItems(widget.$item, item)) {
+      if (widget.$item !== item && GridsterComponent.checkCollisionTwoItems(this.mobile, widget.$item, item)) {
         return widget;
       }
     }
@@ -438,7 +445,7 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
     let widgetsIndex: number = this.grid.length - 1, widget: GridsterItemComponentInterface;
     for (; widgetsIndex > -1; widgetsIndex--) {
       widget = this.grid[widgetsIndex];
-      if (widget.$item !== item && GridsterComponent.checkCollisionTwoItems(widget.$item, item)) {
+      if (widget.$item !== item && GridsterComponent.checkCollisionTwoItems(this.mobile, widget.$item, item)) {
         a.push(widget);
       }
     }
