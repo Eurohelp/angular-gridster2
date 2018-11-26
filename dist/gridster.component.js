@@ -357,7 +357,11 @@ var GridsterComponent = /** @class */ (function () {
         var area = item.cols * item.rows;
         var inMinArea = minAreaLimit <= area;
         var inMaxArea = maxAreaLimit >= area;
-        return !(noNegativePosition && maxGridCols && maxGridRows && inColsLimits && inRowsLimits && inMinArea && inMaxArea);
+        if(this.mobile){
+            return !(noNegativePosition && maxGridRows && inRowsLimits && inMinArea && inMaxArea);
+        }else{
+            return !(noNegativePosition && maxGridCols && maxGridRows && inColsLimits && inRowsLimits && inMinArea && inMaxArea);
+        }
     };
     GridsterComponent.prototype.findItemWithItem = function (item) {
         var widgetsIndex = this.grid.length - 1, widget;
@@ -406,16 +410,23 @@ var GridsterComponent = /** @class */ (function () {
         var rowsIndex = startingFrom.y || 0, colsIndex;
         for (; rowsIndex < this.rows; rowsIndex++) {
             newItem.y = rowsIndex;
-            colsIndex = startingFrom.x || 0;
-            for (; colsIndex < this.columns; colsIndex++) {
-                newItem.x = colsIndex;
-                if (!this.checkCollision(newItem) && (newItem.x + newItem.cols <= this.columns)) {
-                    return true;
+            if(this.mobile){
+                newItem.x = 0;
+                if (!this.checkCollision(newItem) && (0 <= this.columns)) {
+                  return true;
                 }
-            }
+            }else{
+                colsIndex = startingFrom.x || 0;
+                for (; colsIndex < this.columns; colsIndex++) {
+                  newItem.x = colsIndex;
+                  if (!this.checkCollision(newItem) && (newItem.x + newItem.cols <= this.columns)) {
+                    return true;
+                  }
+                }
+            } 
         }
         var canAddToRows = this.$options.maxRows >= this.rows + newItem.rows;
-        var canAddToColumns = this.$options.maxCols >= this.columns + newItem.cols;
+        var canAddToColumns = this.mobile ? false : this.$options.maxCols >= this.columns + newItem.cols;
         var addToRows = this.rows <= this.columns && canAddToRows;
         if (!addToRows && canAddToColumns) {
             newItem.x = 0;

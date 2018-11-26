@@ -340,7 +340,7 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
   updateItems(): void {
     let itemsOutOfLayout: any [] = [];
     let widget: any;
-
+    
     for (let rowIndex = 0, l = this.grid.length; rowIndex < l; ++rowIndex) {
       widget = this.grid[rowIndex];
       if (widget) {
@@ -415,7 +415,11 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
     const area = item.cols * item.rows;
     const inMinArea = minAreaLimit <= area;
     const inMaxArea = maxAreaLimit >= area;
-    return !(noNegativePosition && maxGridCols && maxGridRows && inColsLimits && inRowsLimits && inMinArea && inMaxArea);
+    if(this.mobile){
+      return !(noNegativePosition && maxGridRows && inRowsLimits && inMinArea && inMaxArea);
+    }else{
+      return !(noNegativePosition && maxGridCols && maxGridRows && inColsLimits && inRowsLimits && inMinArea && inMaxArea);
+    }
   }
 
   findItemWithItem(item: GridsterItemS): GridsterItemComponentInterface | boolean {
@@ -466,16 +470,23 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
     let rowsIndex = startingFrom.y || 0, colsIndex;
     for (; rowsIndex < this.rows; rowsIndex++) {
       newItem.y = rowsIndex;
-      colsIndex = startingFrom.x || 0;
-      for (; colsIndex < this.columns; colsIndex++) {
-        newItem.x = colsIndex;
-        if (!this.checkCollision(newItem) && (newItem.x + newItem.cols <= this.columns)) {
+      if(this.mobile){
+        newItem.x = 0;
+        if (!this.checkCollision(newItem) && (0 <= this.columns)) {
           return true;
         }
-      }
+      }else{
+        colsIndex = startingFrom.x || 0;
+        for (; colsIndex < this.columns; colsIndex++) {
+          newItem.x = colsIndex;
+          if (!this.checkCollision(newItem) && (newItem.x + newItem.cols <= this.columns)) {
+            return true;
+          }
+        }
+      }      
     }
     const canAddToRows = this.$options.maxRows >= this.rows + newItem.rows;
-    const canAddToColumns = this.$options.maxCols >= this.columns + newItem.cols;
+    const canAddToColumns = this.mobile ? false : this.$options.maxCols >= this.columns + newItem.cols;
     const addToRows = this.rows <= this.columns && canAddToRows;
     if (!addToRows && canAddToColumns) {
       newItem.x = 0;
