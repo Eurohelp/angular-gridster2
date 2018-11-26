@@ -260,7 +260,7 @@ var GridsterComponent = /** @class */ (function () {
         this.cdRef.markForCheck();
     };
     GridsterComponent.prototype.calculateColumns = function () {
-        this.elemWidth = this.el.offsetWidth || parseInt(this.el.css('width'), 10);
+        this.elemWidth = this.el.offsetWidth || this.elemWidth;
         if (!this.elemWidth) {
             return;
         }
@@ -325,8 +325,8 @@ var GridsterComponent = /** @class */ (function () {
         }
         else if (this.checkCollision(itemComponent.$item)) {
             if (!this.$options.disableWarnings) {
-                console.warn('Can\'t be placed in the bounds of the dashboard, trying to auto position!/n' +
-                    JSON.stringify(itemComponent.item, ['cols', 'rows', 'x', 'y']));
+                /*console.warn('Can\'t be placed in the bounds of the dashboard, trying to auto position!/n' +
+                    JSON.stringify(itemComponent.item, ['cols', 'rows', 'x', 'y']));*/
             }
             if (!this.$options.disableAutoPositionOnConflict) {
                 this.autoPositionItem(itemComponent);
@@ -400,8 +400,8 @@ var GridsterComponent = /** @class */ (function () {
         else {
             itemComponent.notPlaced = true;
             if (!this.$options.disableWarnings) {
-                console.warn('Can\'t be placed in the bounds of the dashboard!/n' +
-                    JSON.stringify(itemComponent.item, ['cols', 'rows', 'x', 'y']));
+                /*console.warn('Can\'t be placed in the bounds of the dashboard!/n' +
+                    JSON.stringify(itemComponent.item, ['cols', 'rows', 'x', 'y']));*/
             }
         }
     };

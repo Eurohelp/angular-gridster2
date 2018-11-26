@@ -315,7 +315,7 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
   }
 
   calculateColumns(): void {
-    this.elemWidth = this.el.offsetWidth || parseInt(this.el.css('width'), 10);
+    this.elemWidth = this.el.offsetWidth || this.elemWidth;
     if (!this.elemWidth) {
       return;
     }
@@ -381,8 +381,8 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
       this.autoPositionItem(itemComponent);
     } else if (this.checkCollision(itemComponent.$item)) {
       if (!this.$options.disableWarnings) {
-        console.warn('Can\'t be placed in the bounds of the dashboard, trying to auto position!/n' +
-          JSON.stringify(itemComponent.item, ['cols', 'rows', 'x', 'y']));
+        /*console.warn('Can\'t be placed in the bounds of the dashboard, trying to auto position!/n' +
+          JSON.stringify(itemComponent.item, ['cols', 'rows', 'x', 'y']));*/
       }
       if (!this.$options.disableAutoPositionOnConflict) {
         this.autoPositionItem(itemComponent);
@@ -460,8 +460,8 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
     } else {
       itemComponent.notPlaced = true;
       if (!this.$options.disableWarnings) {
-        console.warn('Can\'t be placed in the bounds of the dashboard!/n' +
-          JSON.stringify(itemComponent.item, ['cols', 'rows', 'x', 'y']));
+        /*console.warn('Can\'t be placed in the bounds of the dashboard!/n' +
+          JSON.stringify(itemComponent.item, ['cols', 'rows', 'x', 'y']));*/
       }
     }
   }
