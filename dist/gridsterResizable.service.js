@@ -46,7 +46,9 @@ var GridsterResizable = /** @class */ (function () {
             this.gridster.options.resizable.start(this.gridsterItem.item, this.gridsterItem, e);
         }
         e.stopPropagation();
-        e.preventDefault();
+        if (e.originalEvent !== undefined && e.cancelable) { 
+            e.preventDefault(); 
+        }
         this.dragFunction = this.dragMove.bind(this);
         this.dragStopFunction = this.dragStop.bind(this);
         this.zone.runOutsideAngular(function () {
