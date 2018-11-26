@@ -107,12 +107,10 @@ var GridsterItemComponent = /** @class */ (function () {
         }
     };
     GridsterItemComponent.prototype.canBeDragged = function () {
-        return !this.gridster.mobile &&
-            (this.$item.dragEnabled === undefined ? this.gridster.$options.draggable.enabled : this.$item.dragEnabled);
+        return (this.$item.dragEnabled === undefined ? this.gridster.$options.draggable.enabled : this.$item.dragEnabled);
     };
     GridsterItemComponent.prototype.canBeResized = function () {
-        return !this.gridster.mobile &&
-            (this.$item.resizeEnabled === undefined ? this.gridster.$options.resizable.enabled : this.$item.resizeEnabled);
+        return (this.$item.resizeEnabled === undefined ? this.gridster.$options.resizable.enabled : this.$item.resizeEnabled);
     };
     GridsterItemComponent.decorators = [
         { type: core_1.Component, args: [{
