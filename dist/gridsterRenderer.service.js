@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var gridster_interface_1 = require("./gridster.interface");
 var gridsterConfig_interface_1 = require("./gridsterConfig.interface");
@@ -55,6 +55,7 @@ var GridsterRenderer = /** @class */ (function () {
             removeClass3 = gridsterConfig_interface_1.GridType.Fixed;
         }
         else if (this.gridster.$options.gridType === gridsterConfig_interface_1.GridType.ScrollVertical) {
+            //this.gridster.curRowHeight = this.gridster.curColWidth;
             addClass = gridsterConfig_interface_1.GridType.ScrollVertical;
             removeClass1 = gridsterConfig_interface_1.GridType.Fit;
             removeClass2 = gridsterConfig_interface_1.GridType.ScrollHorizontal;
@@ -93,6 +94,11 @@ var GridsterRenderer = /** @class */ (function () {
             removeClass2 = gridsterConfig_interface_1.GridType.ScrollVertical;
             removeClass3 = gridsterConfig_interface_1.GridType.Fixed;
         }
+        /*if (false) {
+              this.gridster.renderer.removeClass(this.gridster.el, addClass);
+            } else {
+              this.gridster.renderer.addClass(this.gridster.el, addClass);
+            }*/
         this.gridster.renderer.addClass(this.gridster.el, addClass);
         this.gridster.renderer.removeClass(this.gridster.el, removeClass1);
         this.gridster.renderer.removeClass(this.gridster.el, removeClass2);
@@ -119,7 +125,6 @@ var GridsterRenderer = /** @class */ (function () {
     GridsterRenderer.ctorParameters = function () { return [
         { type: gridster_interface_1.GridsterComponentInterface, },
     ]; };
-
     return GridsterRenderer;
 }());
 exports.GridsterRenderer = GridsterRenderer;

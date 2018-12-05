@@ -1,15 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var pluralize = require("pluralize");
-/**
-* @Method: Returns the plural form of any noun.
-* @Param {string}
-* @Return {string}
-*/
-function getPlural(str) {
-    return pluralize.plural(str);
-}
-exports.getPlural = getPlural;
 var gridster_component_1 = require("./gridster.component");
 exports.GridsterComponent = gridster_component_1.GridsterComponent;
 var gridsterItem_component_1 = require("./gridsterItem.component");

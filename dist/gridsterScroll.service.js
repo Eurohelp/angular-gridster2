@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var scrollSensitivity;
 var scrollSpeed;
 var intervalDuration = 50;
@@ -41,7 +41,7 @@ function scroll(gridster, left, top, width, height, e, lastMouse, calculateItemP
     }
     var elemRightOffset = offsetLeft + offsetWidth - left - width;
     var elemLeftOffset = left - offsetLeft;
-    if(gridster.mobile){
+    if (gridster.mobile) {
         cancelW();
         cancelE();
         cancelHorizontal();

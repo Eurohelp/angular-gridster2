@@ -1,13 +1,8 @@
 "use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var gridsterUtils_service_1 = require("./gridsterUtils.service");
+var gridster_interface_1 = require("./gridster.interface");
 var GridsterEmptyCell = /** @class */ (function () {
     function GridsterEmptyCell(gridster) {
         this.gridster = gridster;
@@ -208,9 +203,13 @@ var GridsterEmptyCell = /** @class */ (function () {
         }
         return item;
     };
-    GridsterEmptyCell = __decorate([
-        core_1.Injectable()
-    ], GridsterEmptyCell);
+    GridsterEmptyCell.decorators = [
+        { type: core_1.Injectable },
+    ];
+    /** @nocollapse */
+    GridsterEmptyCell.ctorParameters = function () { return [
+        { type: gridster_interface_1.GridsterComponentInterface, },
+    ]; };
     return GridsterEmptyCell;
 }());
 exports.GridsterEmptyCell = GridsterEmptyCell;

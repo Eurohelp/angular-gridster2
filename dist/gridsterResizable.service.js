@@ -1,16 +1,12 @@
 "use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var gridsterScroll_service_1 = require("./gridsterScroll.service");
 var gridsterPush_service_1 = require("./gridsterPush.service");
 var gridsterUtils_service_1 = require("./gridsterUtils.service");
 var gridsterPushResize_service_1 = require("./gridsterPushResize.service");
+var gridsterItemComponent_interface_1 = require("./gridsterItemComponent.interface");
+var gridster_interface_1 = require("./gridster.interface");
 var GridsterResizable = /** @class */ (function () {
     function GridsterResizable(gridsterItem, gridster, zone) {
         this.zone = zone;
@@ -46,8 +42,8 @@ var GridsterResizable = /** @class */ (function () {
             this.gridster.options.resizable.start(this.gridsterItem.item, this.gridsterItem, e);
         }
         e.stopPropagation();
-        if (e.originalEvent !== undefined && e.cancelable) { 
-            e.preventDefault(); 
+        if (e.originalEvent !== undefined && e.cancelable) {
+            e.preventDefault();
         }
         this.dragFunction = this.dragMove.bind(this);
         this.dragStopFunction = this.dragStop.bind(this);
@@ -364,9 +360,15 @@ var GridsterResizable = /** @class */ (function () {
     GridsterResizable.prototype.setItemWidth = function (width) {
         this.gridsterItem.renderer.setStyle(this.gridsterItem.el, 'width', width + 'px');
     };
-    GridsterResizable = __decorate([
-        core_1.Injectable()
-    ], GridsterResizable);
+    GridsterResizable.decorators = [
+        { type: core_1.Injectable },
+    ];
+    /** @nocollapse */
+    GridsterResizable.ctorParameters = function () { return [
+        { type: gridsterItemComponent_interface_1.GridsterItemComponentInterface, },
+        { type: gridster_interface_1.GridsterComponentInterface, },
+        { type: core_1.NgZone, },
+    ]; };
     return GridsterResizable;
 }());
 exports.GridsterResizable = GridsterResizable;

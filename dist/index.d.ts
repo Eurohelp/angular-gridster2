@@ -1,9 +1,3 @@
-/**
-* @Method: Returns the plural form of any noun.
-* @Param {string}
-* @Return {string}
-*/
-export declare function getPlural(str: any): string;
 export { GridsterComponent } from './gridster.component';
 export { GridsterItemComponent } from './gridsterItem.component';
 export { GridsterItem } from './gridsterItem.interface';
