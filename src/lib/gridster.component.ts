@@ -315,7 +315,7 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
   }
 
   calculateColumns(): void {
-    this.elemWidth = this.el.offsetWidth || this.elemWidth;
+    this.elemWidth = this.el.clientWidth || this.el.offsetWidth || this.elemWidth;
     if (!this.elemWidth) {
       return;
     }

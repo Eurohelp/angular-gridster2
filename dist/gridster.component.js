@@ -261,7 +261,7 @@ var GridsterComponent = /** @class */ (function () {
         this.cdRef.markForCheck();
     };
     GridsterComponent.prototype.calculateColumns = function () {
-        this.elemWidth = this.el.offsetWidth || this.elemWidth;
+        this.elemWidth = this.el.clientWidth || this.el.offsetWidth || this.elemWidth;
         if (!this.elemWidth) {
             return;
         }
