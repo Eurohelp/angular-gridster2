@@ -63,6 +63,7 @@ var GridsterComponent = /** @class */ (function () {
             };
             this.columns = this.$options.minCols;
             this.rows = this.$options.minRows;
+            this.calculateColumns();
             this.setGridSize();
             this.calculateLayout();
         }
@@ -157,11 +158,9 @@ var GridsterComponent = /** @class */ (function () {
         this.curHeight = height;
     };
     GridsterComponent.prototype.setGridDimensions = function () {
-        this.setGridSize();
         if (!this.mobile && this.$options.mobileBreakpoint > this.curWidth) {
             this.mobile = !this.mobile;
             this.renderer.addClass(this.el, 'mobile');
-            //this.renderer.removeClass(this.el, 'mobile');
         }
         else if (this.mobile && this.$options.mobileBreakpoint < this.curWidth) {
             this.mobile = !this.mobile;
@@ -176,6 +175,7 @@ var GridsterComponent = /** @class */ (function () {
             }
         }
         this.calculateColumns();
+        this.setGridSize();
         this.rows = rows;
     };
     GridsterComponent.prototype.calculateLayout = function () {
@@ -253,7 +253,6 @@ var GridsterComponent = /** @class */ (function () {
         }
         else if (this.$options.displayGrid === 'none' || !this.dragInProgress || this.mobile) {
             this.renderer.addClass(this.el, 'display-grid');
-            //this.renderer.removeClass(this.el, 'display-grid');
         }
         this.setGridDimensions();
         this.gridColumns.length = Math.max(this.columns, Math.floor(this.curWidth / this.curColWidth)) || 0;
@@ -261,7 +260,7 @@ var GridsterComponent = /** @class */ (function () {
         this.cdRef.markForCheck();
     };
     GridsterComponent.prototype.calculateColumns = function () {
-        this.elemWidth = this.el.clientWidth || this.el.offsetWidth || this.elemWidth;
+        this.elemWidth = this.el.offsetWidth || this.elemWidth;
         if (!this.elemWidth) {
             return;
         }
@@ -342,6 +341,7 @@ var GridsterComponent = /** @class */ (function () {
     GridsterComponent.prototype.removeItem = function (itemComponent) {
         this.grid.splice(this.grid.indexOf(itemComponent), 1);
         this.calculateLayoutDebounce();
+        // this.updateItems(); podriamos poner una opcion que haga un updateItems al borrar
         if (this.options.itemRemovedCallback) {
             this.options.itemRemovedCallback(itemComponent.item, itemComponent);
         }
@@ -354,11 +354,8 @@ var GridsterComponent = /** @class */ (function () {
         var noNegativePosition = item.y > -1 && item.x > -1;
         var maxGridCols = item.cols + item.x <= this.columns;
         var maxGridRows = item.rows + item.y <= this.$options.maxRows;
-        var maxItemCols = item.maxItemCols === undefined ? this.$options.maxItemCols : item.maxItemCols;
-        var minItemCols = item.minItemCols === undefined ? this.$options.minItemCols : item.minItemCols;
         var maxItemRows = item.maxItemRows === undefined ? this.$options.maxItemRows : item.maxItemRows;
         var minItemRows = item.minItemRows === undefined ? this.$options.minItemRows : item.minItemRows;
-        var inColsLimits = item.cols <= maxItemCols && item.cols >= minItemCols;
         var inRowsLimits = item.rows <= maxItemRows && item.rows >= minItemRows;
         var minAreaLimit = item.minItemArea === undefined ? this.$options.minItemArea : item.minItemArea;
         var maxAreaLimit = item.maxItemArea === undefined ? this.$options.maxItemArea : item.maxItemArea;
@@ -369,7 +366,7 @@ var GridsterComponent = /** @class */ (function () {
             return !(noNegativePosition && maxGridRows && inRowsLimits && inMinArea && inMaxArea);
         }
         else {
-            return !(noNegativePosition && maxGridCols && maxGridRows && inColsLimits && inRowsLimits && inMinArea && inMaxArea);
+            return !(noNegativePosition && maxGridCols && maxGridRows && inRowsLimits && inMinArea && inMaxArea);
         }
     };
     GridsterComponent.prototype.findItemWithItem = function (item) {
@@ -409,13 +406,16 @@ var GridsterComponent = /** @class */ (function () {
     };
     GridsterComponent.prototype.getNextPossiblePosition = function (newItem, startingFrom) {
         if (startingFrom === void 0) { startingFrom = {}; }
-        if (newItem.cols === -1) {
-            newItem.cols = this.$options.defaultItemCols;
-        }
         if (newItem.rows === -1) {
             newItem.rows = this.$options.defaultItemRows;
         }
         this.setGridDimensions();
+        if (newItem.cols < this.columns) {
+            newItem.cols = newItem.minItemCols;
+        }
+        if (newItem.cols > this.columns) {
+            newItem.cols = this.columns;
+        }
         var rowsIndex = startingFrom.y || 0, colsIndex;
         for (; rowsIndex < this.rows; rowsIndex++) {
             newItem.y = rowsIndex;

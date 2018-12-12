@@ -110,6 +110,7 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
       };
       this.columns = this.$options.minCols;
       this.rows = this.$options.minRows;
+      this.calculateColumns();
       this.setGridSize();
       this.calculateLayout();
     }
@@ -209,11 +210,9 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
   }
 
   setGridDimensions(): void {
-    this.setGridSize();
     if (!this.mobile && this.$options.mobileBreakpoint > this.curWidth) {
       this.mobile = !this.mobile;
       this.renderer.addClass(this.el, 'mobile');
-      //this.renderer.removeClass(this.el, 'mobile');
     } else if (this.mobile && this.$options.mobileBreakpoint < this.curWidth) {
       this.mobile = !this.mobile;
       this.renderer.removeClass(this.el, 'mobile');
@@ -229,6 +228,7 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
     }
 
     this.calculateColumns();
+    this.setGridSize();
     this.rows = rows;
   }
 
@@ -306,7 +306,6 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
       this.renderer.addClass(this.el, 'display-grid');
     } else if (this.$options.displayGrid === 'none' || !this.dragInProgress || this.mobile) {
       this.renderer.addClass(this.el, 'display-grid');
-      //this.renderer.removeClass(this.el, 'display-grid');
     }
     this.setGridDimensions();
     this.gridColumns.length = Math.max(this.columns, Math.floor(this.curWidth / this.curColWidth)) || 0;
@@ -315,7 +314,7 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
   }
 
   calculateColumns(): void {
-    this.elemWidth = this.el.clientWidth || this.el.offsetWidth || this.elemWidth;
+    this.elemWidth = this.el.offsetWidth || this.elemWidth;
     if (!this.elemWidth) {
       return;
     }
@@ -397,10 +396,10 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
   removeItem(itemComponent: GridsterItemComponentInterface): void {
     this.grid.splice(this.grid.indexOf(itemComponent), 1);
     this.calculateLayoutDebounce();
+    // this.updateItems(); podriamos poner una opcion que haga un updateItems al borrar
     if (this.options.itemRemovedCallback) {
       this.options.itemRemovedCallback(itemComponent.item, itemComponent);
     }
-    this.updateItems();
   }
 
   checkCollision(item: GridsterItemS): GridsterItemComponentInterface | boolean {
@@ -411,11 +410,8 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
     const noNegativePosition = item.y > -1 && item.x > -1;
     const maxGridCols = item.cols + item.x <= this.columns;
     const maxGridRows = item.rows + item.y <= this.$options.maxRows;
-    const maxItemCols = item.maxItemCols === undefined ? this.$options.maxItemCols : item.maxItemCols;
-    const minItemCols = item.minItemCols === undefined ? this.$options.minItemCols : item.minItemCols;
     const maxItemRows = item.maxItemRows === undefined ? this.$options.maxItemRows : item.maxItemRows;
     const minItemRows = item.minItemRows === undefined ? this.$options.minItemRows : item.minItemRows;
-    const inColsLimits = item.cols <= maxItemCols && item.cols >= minItemCols;
     const inRowsLimits = item.rows <= maxItemRows && item.rows >= minItemRows;
     const minAreaLimit = item.minItemArea === undefined ? this.$options.minItemArea : item.minItemArea;
     const maxAreaLimit = item.maxItemArea === undefined ? this.$options.maxItemArea : item.maxItemArea;
@@ -425,7 +421,7 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
     if(this.mobile){
       return !(noNegativePosition && maxGridRows && inRowsLimits && inMinArea && inMaxArea);
     }else{
-      return !(noNegativePosition && maxGridCols && maxGridRows && inColsLimits && inRowsLimits && inMinArea && inMaxArea);
+      return !(noNegativePosition && maxGridCols && maxGridRows && inRowsLimits && inMinArea && inMaxArea);
     }
   }
 
@@ -467,13 +463,16 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
   }
 
   getNextPossiblePosition(newItem: GridsterItemS, startingFrom: { y?: number, x?: number } = {}): boolean {
-    if (newItem.cols === -1) {
-      newItem.cols = this.$options.defaultItemCols;
-    }
     if (newItem.rows === -1) {
       newItem.rows = this.$options.defaultItemRows;
     }
     this.setGridDimensions();
+    if (newItem.cols < this.columns) {
+        newItem.cols = newItem.minItemCols;
+    }
+    if (newItem.cols > this.columns) {
+        newItem.cols = this.columns;
+    }
     let rowsIndex = startingFrom.y || 0, colsIndex;
     for (; rowsIndex < this.rows; rowsIndex++) {
       newItem.y = rowsIndex;
