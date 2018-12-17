@@ -410,9 +410,6 @@ var GridsterComponent = /** @class */ (function () {
             newItem.rows = this.$options.defaultItemRows;
         }
         this.setGridDimensions();
-        if (newItem.cols < this.columns) {
-            newItem.cols = newItem.minItemCols;
-        }
         if (newItem.cols > this.columns) {
             newItem.cols = this.columns;
         }

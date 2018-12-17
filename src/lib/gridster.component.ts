@@ -467,11 +467,8 @@ export class GridsterComponent implements OnInit, OnChanges, OnDestroy, Gridster
       newItem.rows = this.$options.defaultItemRows;
     }
     this.setGridDimensions();
-    if (newItem.cols < this.columns) {
-        newItem.cols = newItem.minItemCols;
-    }
     if (newItem.cols > this.columns) {
-        newItem.cols = this.columns;
+      newItem.cols = this.columns;
     }
     let rowsIndex = startingFrom.y || 0, colsIndex;
     for (; rowsIndex < this.rows; rowsIndex++) {
